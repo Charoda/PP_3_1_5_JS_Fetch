@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Poeple</title>
+</head>
+
+<body>
+
+<!--<table>-->
+<!--    <tr th:each="user : ${userList}">-->
+<!--       <td>-->
+<!--           <a th:href="@{/{id}(id=${user.id})}" th:text="${user.username}">user</a>-->
+<!--       </td>-->
+<!--    </tr>-->
+<!--</table>-->
+<div class="containter">
+<table border="1">
+    <h1> Hi Admin! You can see all list of users: </h1>
+    <thead>
+    <tr>
+        <th> UserName </th>
+        <th> email </th>
+        <th>Roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--    <tr th:if="${books.empty}">-->
+    <!--        <td colspan="2"> No Books Available </td>-->
+    <!--    </tr>-->
+    <tr th:each="user : ${userList}">
+        <td>
+            <a th:href="@{/{id}(id=${user.id})}" th:text="${user.username}"></a>
+        </td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.roles}">Roles</td>>
+    </tr>
+    </tbody>
+
+</table>
+</div>
+
+
+<br>
+<hr>
+<a th:href="@{/logout}" >Logout</a>
+<!--<a th:href="@{/new}">Create new User</a>-->
+
+
+</body>
+
+</html>

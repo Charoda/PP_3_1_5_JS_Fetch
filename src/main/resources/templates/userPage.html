@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Spring Security Example</title>
 </head>
 <body>
-<h1> Hi User! This is your page </h1>
+<h1></h1>
 
 <table border="1">
     <thead>
     <tr>
-        <th> UserID </th>
-        <th> Username </th>
+        <th> UserName </th>
         <th> email </th>
     </tr>
     </thead>
     <tbody>
+    <!--    <tr th:if="${books.empty}">-->
+    <!--        <td colspan="2"> No Books Available </td>-->
+    <!--    </tr>-->
     <tr>
-        <td> <p th:text="${user.id}">VALUE</p> </td>
         <td> <p th:text="${user.username}">VALUE</p> </td>
-        <!--        <td> <p th:hidden="${user.password}">VALUE</p> </td>-->
+<!--        <td> <p th:hidden="${user.password}">VALUE</p> </td>-->
         <td> <p th:text="${user.email}">VALUE</p> </td>
     </tr>
     </tbody>
 </table>
+
+
+
+
+
+<br>
+<hr>
+
+
+<a th:href="@{/edit/{id}(id=${user.id})}">UPDATE</a>
+
+<hr>
+<br>
+<form th:method="delete" th:action="@{/{id}(id=${user.id})}">
+    <input type="submit" value="Delete">
+</form>
+
+
 <hr>
 <br>
 <a th:href="@{/logout}" >Logout</a>
 <br>
 <hr>
+
 </body>
 </html>
