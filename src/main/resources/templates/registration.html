@@ -24,8 +24,8 @@
   <br>
   <hr>
   <div class="col-8">
-    <th:block th:each="role: ${listRoles}">
-      <input type="checkbox" th:field="*{roles}"
+    <th:block  th:each="role: ${listRoles}">
+      <input type="checkbox" name="roles" th:field="*{roles}"
              th:text="${role.name}" th:value="${role.id}" class="m-2" />
     </th:block>
   </div>
