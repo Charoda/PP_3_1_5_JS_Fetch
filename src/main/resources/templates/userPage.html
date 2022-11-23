@@ -2,11 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 </head>
 <body>
-<h1></h1>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
-<table border="1">
+<h1></h1>
+<div class="container">
+<table border="1" class="table">
     <thead>
     <tr>
         <th> UserName </th>
@@ -17,12 +25,14 @@
     <!--    <tr th:if="${books.empty}">-->
     <!--        <td colspan="2"> No Books Available </td>-->
     <!--    </tr>-->
-    <tr>
+    <tr class="table-warning">
         <td> <p th:text="${user.username}">VALUE</p> </td>
 <!--        <td> <p th:hidden="${user.password}">VALUE</p> </td>-->
         <td> <p th:text="${user.email}">VALUE</p> </td>
     </tr>
     </tbody>
+
+
 </table>
 
 
@@ -32,11 +42,14 @@
 <br>
 <hr>
 
+    <button type="button" class="btn btn-outline-secondary">
+        <a th:href="@{/edit/{id}(id=${user.id})}">UPDATE</a>
+    </button>
 
-<a th:href="@{/edit/{id}(id=${user.id})}">UPDATE</a>
 
 <hr>
 <br>
+
 <form th:method="delete" th:action="@{/{id}(id=${user.id})}">
     <input type="submit" value="Delete">
 </form>
@@ -44,9 +57,12 @@
 
 <hr>
 <br>
-<a th:href="@{/logout}" >Logout</a>
+    <button type="button" class="btn btn-outline-secondary">
+        <a th:href="@{/logout}" >Logout</a>
+    </button>
+
 <br>
 <hr>
-
+</div>
 </body>
 </html>

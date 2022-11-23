@@ -12,4 +12,6 @@ public interface RoleDao {
 
     Role getRole(Long id);
 
+    List<Role> getRolesListById(List<Long> roles);
+
 }

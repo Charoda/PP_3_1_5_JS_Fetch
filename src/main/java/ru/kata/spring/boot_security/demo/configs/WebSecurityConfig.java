@@ -32,8 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration").permitAll()
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/", "/registration","/user").permitAll()
                 .antMatchers("/users","/edit/**","/update/**","/{id}","/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -55,8 +54,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder  passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-
-
 }

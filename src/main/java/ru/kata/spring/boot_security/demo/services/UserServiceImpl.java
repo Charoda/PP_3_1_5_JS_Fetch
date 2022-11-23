@@ -106,7 +106,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles) {
+    @Override
+    public void newUpdateUser(User user, List<Role> role) {
+        String password = findUserBYId(user.getId()).getPassword();
+        String pass = user.getPassword();
+        if (!passwordEncoder.encode(user.getPassword()).equals(password)){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        role.stream().forEach(n -> user.addRole(n));
+        userRepository.newupdate(user);
+    }
+
+    //    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles) {
 //        return roles.stream().map(role ->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 //    }
 

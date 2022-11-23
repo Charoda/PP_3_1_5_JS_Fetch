@@ -26,21 +26,20 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-        public String register(@ModelAttribute("user") User user, Model model) {
+        public String register(Model model) {
+        model.addAttribute("newuser",new User());
         model.addAttribute("listRoles", roleService.listRoles());
-            return "/registration";
+            return "/newUser";
     }
 
     @PostMapping("/registration")
-        public String performRegister(@ModelAttribute("user") User user,
-                                      @RequestParam("roles") Long[] rolesId) {
+        public String performRegister(@ModelAttribute("newuser") User user,
+                                      @RequestParam("listRoles") Long[] rolesId) {
             for  (Long id : rolesId ) {
                 user.addRole(roleService.getRole(id));
             }
-            if (userService.saveUser(user)) {
-                return "/registSuccess";
-            }
-            return "/index";
+            userService.saveUser(user);
+            return "redirect:/user";
     }
 
 }

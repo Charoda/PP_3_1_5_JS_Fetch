@@ -7,9 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //
 //@Entity
@@ -256,5 +255,15 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public String getShortRoles() {
+        String str = getRoles().stream().collect(Collectors.toList()).toString();
+        if (str.equals("[ROLE_ADMIN]")){
+            return "ADMIN";
+        } else if (str.equals("[ROLE_USER]")) {
+            return "USER";
+        }
+        return "ADMIN USER";
     }
 }

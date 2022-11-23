@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
@@ -46,11 +47,17 @@ public class CrudController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin")
-    public String adminPage() {
+    public String adminPage(Principal principal,Model model) {
+        User user  = userService.findByUsername(principal.getName());
+        List<User>  users = userService.allUsers();
+        model.addAttribute("newuser",new User());
+        model.addAttribute("user",user);
+        model.addAttribute("users",users);
+        model.addAttribute("role",roleService.listRoles());
         return "/admin";
     }
 
@@ -68,6 +75,13 @@ public class CrudController {
         return "redirect:/users";
     }
 
+    @PostMapping("/newupdate/{id}")
+    public String newUpdate(@ModelAttribute User user, @RequestParam("listRoles") List<Long> listRoles) {
+
+        userService.newUpdateUser(user,roleService.getRolesListById(listRoles));
+        return "redirect:/admin";
+    }
+
 
     @GetMapping("/user")
     public String index(Principal principal, Model model){
@@ -77,7 +91,9 @@ public class CrudController {
     }
 
     @GetMapping("/index")
-    public String index2() {
+    public String index2(Principal principal, Model model) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user",user);
         return "/index";
     }
 }
