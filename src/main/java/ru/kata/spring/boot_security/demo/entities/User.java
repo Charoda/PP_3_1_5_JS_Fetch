@@ -139,6 +139,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
+@NamedEntityGraph
 public class User implements UserDetails {
 
     @Id
@@ -184,7 +185,9 @@ public class User implements UserDetails {
         return this.roles;
     }
 
-
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -213,9 +216,6 @@ public class User implements UserDetails {
         this.roles.add(role);
     }
 
-    public void dropRoles() {
-        this.roles.clear();
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -237,20 +237,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
-        User user = (User) o;
-
-        return getId().equals(user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
-    }
 
     @Override
     public String toString() {

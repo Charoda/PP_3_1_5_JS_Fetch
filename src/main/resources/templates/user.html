@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <title>Spring Security Example</title>
 </head>
 <body>
-
-
+<!--<nav class="navbar py-0 navbar-expand-lg navbar-dark bg-dark">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="collapse navbar-collapse" id="navbarText">-->
+<!--            <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                <li class="nav-item active">-->
+<!--          <span class="navbar-text text-light">-->
+<!--            <th:block th:if="${#request.userPrincipal}">-->
+<!--              <strong th:text="${user.getUsername()}">user</strong> <span> with roles:</span>-->
+<!--              <th:block th:each="role : ${user.getRoles()}">-->
+<!--                <th:block th:text="${role.toString()}">role</th:block>-->
+<!--              </th:block>-->
+<!--            </th:block>-->
+<!--          </span>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <span class="navbar-text">-->
+<!--        <th:block th:if="${#request.userPrincipal}">-->
+<!--          <a class="nav-link text-secondary" th:href="@{/logout}">Logout</a>-->
+<!--        </th:block>-->
+<!--      </span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
 <nav class="navbar navbar-dark bg-dark p-0">
     <div class="container-fluid m-2">
         <a class="navbar-brand col-lg-10 col-sm-3 col-md-2 mr-0" href="#" style="margin-left: 27px;"
@@ -25,21 +49,26 @@
         </ul>
     </div>
 </nav>
+<div class="container-fluid" style="height: 1000px">
+    <div class="row" style="height: inherit">
 
-<div class="container-fluid">
-    <div class="row">
-        <!--Menu-->
-        <nav class="col-sm-2 d-md-block bg-white sidebar">
+<!--        <nav class="col-md-2 nav flex-column nav-pills text-center">-->
+<!--            <br>-->
+<!--            <a class="nav-link" th:if="${#request.isUserInRole('ROLE_ADMIN')}" th:href="@{/admin}">Admin</a>-->
+<!--            <a class="nav-link bg-primary text-white" th:href="@{/user/{id}(id=${user.getId()})}">User</a>-->
+<!--        </nav>-->
+
+        <nav class="col-sm-2 d-md-block bg-white sidebar text-center">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <div sec:authorize="hasRole('ROLE_ADMIN')" sec:visible="hasRole('ROLE_ADMIN')">
+                    <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" sec:visible="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
                         <li class="nav-item">
                             <a class="nav-link" href="/admin">
                                 <span class="text-dark">Admin</span>
                             </a>
                         </li>
                     </div>
-                    <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                    <div sec:authorize="hasAnyRole('ROLE_USER')">
                         <li class="nav-item">
                             <a class="nav-link bg-primary" href="/user">
                                 <span class="text-light">User</span>
@@ -50,80 +79,47 @@
             </div>
         </nav>
 
-        <main role="main" class="col-sm-10 ml-sm-auto col-lg-10 bg-light">
-            <h1 style="margin-top: 5px;"> <span>User information page</span> </h1>
-            <div class="card header">
-                <!--                <div class="container col-sm col sm-lg-12">-->
-                <div class="card-header col-sm-12">
-                    <h5 style="margin-top: 0px;" class="card-text">About user</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table">
-                        <table class="usersTable table table-striped bg-white">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td th:text="${user.id}"></td>
-                                <td th:text="${user.email}"></td>
-                                <td th:text="${user.getShortRoles()}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--                    </div>-->
-                </div>
-            </div> <!-- <CARD/> </div>-->
-        </main>
+        <div class="col-md-10 bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12"><br>
+                        <h1>User information-page</h1><br>
 
+                        <div class="card card-warning">
+                            <div class="card-header"><h3>About user</h3></div>
+                            <div class="card-body">
+                                <table class="table table-striped" th:if="${user}">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${user.getId()}">_ID_</td>
+                                        <td th:text="${user.username}">username</td>
+                                        <td th:text="${user.email}">_Email_</td>
+                                        <td>
+                                            <th:block th:each="role : ${user.getRoles()}"
+                                                      th:text="${role.toString()} + ' '">_Role_
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<br>
-
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
-
-
-
 </body>
 </html>
-
-
-
-
-<!--<div class="container">-->
-<!--<h1> Hi User! This is your page </h1>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>-->
-<!--<table border="1">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th> UserID </th>-->
-<!--        <th> Username </th>-->
-<!--        <th> email </th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--        <td> <p th:text="${user.id}">VALUE</p> </td>-->
-<!--        <td> <p th:text="${user.username}">VALUE</p> </td>-->
-<!--        &lt;!&ndash;        <td> <p th:hidden="${user.password}">VALUE</p> </td>&ndash;&gt;-->
-<!--        <td> <p th:text="${user.email}">VALUE</p> </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<a th:href="@{/logout}" >Logout</a>-->
-<!--<br>-->
-<!--<hr>-->
-<!--</div>-->

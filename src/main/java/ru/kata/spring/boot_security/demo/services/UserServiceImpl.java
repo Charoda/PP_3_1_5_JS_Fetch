@@ -28,18 +28,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private  PasswordEncoder passwordEncoder;
 
 
     @Autowired
     public UserServiceImpl(
-            UserDao userRepository,
-            PasswordEncoder passwordEncoder) {
+            UserDao userRepository,PasswordEncoder passwordEncoder
+            ) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder =passwordEncoder;
     }
-
-
 
 
     public User findUserBYId(Long id) {

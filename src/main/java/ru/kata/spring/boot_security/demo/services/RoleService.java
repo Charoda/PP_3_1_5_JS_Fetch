@@ -4,10 +4,12 @@ import ru.kata.spring.boot_security.demo.entities.Role;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface RoleService {
 
-    Collection<Role> listRoles();
+
+    List<Role> index();
 
     Role getRole(Long id);
 
