@@ -30,14 +30,14 @@ public class UserController {
     public String userPage(@PathVariable Long id, Model model) {
         model.addAttribute("roles", roleService.index());
         model.addAttribute("user", userService.findUserBYId(id));
-        return "userAkhmed";
+        return "user";
     }
 
     @GetMapping
     public String userPage(Principal principal, Model model) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user",user);
-        return "userAkhmed";
+        return "user";
     }
 
 }
